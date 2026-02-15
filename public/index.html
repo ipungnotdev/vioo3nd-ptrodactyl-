@@ -7,84 +7,42 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="header">
-    <img src="https://risrfgvolfxuavpsmfjn.supabase.co/storage/v1/object/public/uploads/1771172142816-9nfz3h5n.png" alt="Logo">
-    <h2>Vioo3nd Pterodactyl</h2>
+
+<!-- Banner + Logo -->
+<div class="banner">
+  <img src="https://risrfgvolfxuavpsmfjn.supabase.co/storage/v1/object/public/uploads/1771172844683-mm6sutba.png" alt="Banner">
+  <div class="banner-text">
+    <img src="https://risrfgvolfxuavpsmfjn.supabase.co/storage/v1/object/public/uploads/1771172142816-9nfz3h5n.png" alt="Logo" class="logo">
+    <h1>Vioo3nd Pterodactyl</h1>
+    <p>Panel Hosting Murah & Stabil<br>Server Anti Delay • 24 Jam Online • Auto Create</p>
+  </div>
 </div>
 
-<div class="hero"></div>
-<div class="hero-text">
-    <h1>Panel Hosting Murah & Stabil</h1>
-    <p>Server Anti Delay • 24 Jam Online • Auto Create</p>
+<!-- VPS Specs -->
+<div class="specs">
+  <div class="card"><h3>CPU</h3><p>8 Core AMD/Intel</p></div>
+  <div class="card"><h3>RAM</h3><p>16GB DDR4</p></div>
+  <div class="card"><h3>Storage</h3><p>200GB NVMe</p></div>
 </div>
 
-<div class="spec">
-    <div class="spec-card"><h4>CPU</h4><p>8 Core AMD/Intel</p></div>
-    <div class="spec-card"><h4>RAM</h4><p>16GB DDR4</p></div>
-    <div class="spec-card"><h4>Storage</h4><p>200GB NVMe</p></div>
+<!-- Panel List -->
+<div class="panel-list">
+  <div class="panel"><h3>2GB RAM</h3><p>1K</p><button class="order-btn">Order</button></div>
+  <div class="panel"><h3>4GB RAM</h3><p>4K</p><button class="order-btn">Order</button></div>
+  <div class="panel"><h3>5GB RAM</h3><p>6K</p><button class="order-btn">Order</button></div>
+  <div class="panel"><h3>6GB RAM</h3><p>8K</p><button class="order-btn">Order</button></div>
+  <div class="panel"><h3>7GB RAM</h3><p>10K</p><button class="order-btn">Order</button></div>
+  <div class="panel"><h3>9GB RAM</h3><p>12K</p><button class="order-btn">Order</button></div>
+  <div class="panel"><h3>10GB RAM</h3><p>15K</p><button class="order-btn">Order</button></div>
+  <div class="panel"><h3>Unlimited RAM</h3><p>17K</p><button class="order-btn">Order</button></div>
 </div>
 
-<div class="panel">
-    <div class="card"><h3>2GB RAM</h3><div class="price">1K</div><button onclick="openOrder('2GB','1000')">Order</button></div>
-    <div class="card"><h3>4GB RAM</h3><div class="price">4K</div><button onclick="openOrder('4GB','4000')">Order</button></div>
-    <div class="card"><h3>5GB RAM</h3><div class="price">6K</div><button onclick="openOrder('5GB','6000')">Order</button></div>
-    <div class="card"><h3>6GB RAM</h3><div class="price">8K</div><button onclick="openOrder('6GB','8000')">Order</button></div>
-    <div class="card"><h3>7GB RAM</h3><div class="price">10K</div><button onclick="openOrder('7GB','10000')">Order</button></div>
-    <div class="card"><h3>9GB RAM</h3><div class="price">12K</div><button onclick="openOrder('9GB','12000')">Order</button></div>
-    <div class="card"><h3>10GB RAM</h3><div class="price">15K</div><button onclick="openOrder('10GB','15000')">Order</button></div>
-    <div class="card"><h3>Unlimited RAM</h3><div class="price">17K</div><button onclick="openOrder('Unlimited','17000')">Order</button></div>
+<!-- Overlay WA & Telegram -->
+<div class="overlay">
+  <a href="https://wa.me/nomorwa" target="_blank" class="circle wa">WA</a>
+  <a href="https://t.me/username" target="_blank" class="circle tele">TG</a>
 </div>
 
-<div class="modal" id="modal">
-    <div class="modal-box">
-        <h3 id="paketTitle"></h3>
-        <p>Total: <span id="totalHarga"></span></p>
-        <input type="text" id="username" placeholder="Masukkan Username">
-        <button onclick="showQRIS()">Bayar QRIS</button>
-        <div class="qris" id="qrisBox" style="display:none;"></div>
-        <button onclick="closeModal()">Tutup</button>
-    </div>
-</div>
-
-<div class="float-toggle" onclick="toggleFloat()">☰</div>
-<div class="float-panel" id="floatPanel">
-    <a href="https://wa.me/628xxxx" target="_blank"><img src="https://img.icons8.com/ios/50/ffffff/whatsapp.png"/></a>
-    <a href="https://t.me/username" target="_blank"><img src="https://img.icons8.com/ios/50/ffffff/telegram-app.png"/></a>
-</div>
-
-<script>
-function openOrder(paket,harga){
-    document.getElementById("paketTitle").innerText="Order Panel "+paket;
-    document.getElementById("totalHarga").innerText="Rp "+harga;
-    document.getElementById("modal").style.display="flex";
-}
-function closeModal(){
-    document.getElementById("modal").style.display="none";
-    document.getElementById("qrisBox").style.display="none";
-}
-function showQRIS(){
-    let user=document.getElementById("username").value;
-    if(user==""){ alert("Isi username dulu!"); return; }
-    const paket = document.getElementById("paketTitle").innerText.replace("Order Panel ","");
-    const harga = document.getElementById("totalHarga").innerText.replace("Rp ","");
-    fetch('/api/create-order',{
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({ username: user, paket: paket, harga: harga })
-    })
-    .then(res=>res.json())
-    .then(data=>{
-        if(data.success){
-            document.getElementById("qrisBox").innerHTML = `<p>Scan QRIS:</p><img src="${data.qris_url}" width="200">`;
-            document.getElementById("qrisBox").style.display='block';
-        } else { alert("Gagal generate QRIS"); }
-    })
-    .catch(err=>{ alert("Error server"); console.error(err); });
-}
-function toggleFloat(){
-    const panel = document.getElementById('floatPanel');
-    panel.style.display = panel.style.display==='flex'?'none':'flex';
-}
-</script>
+<script src="script.js"></script>
 </body>
-                             </html>
+                                                  </html>

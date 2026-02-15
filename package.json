@@ -1,7 +1,6 @@
 {
   "name": "vioo3nd-panel",
   "version": "1.0.0",
-  "description": "Panel VPS siap deploy + QRIS Pakasir + Admin dashboard",
   "main": "server.js",
   "type": "module",
   "scripts": {

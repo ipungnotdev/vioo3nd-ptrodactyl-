@@ -14,7 +14,6 @@ let panelPrices = {
     '9GB':12000,'10GB':15000,'Unlimited':17000
 };
 
-// Settings PLTA + Pakasir
 let settings = {
     pakasir_merchant_id: "MERCHANT_ID_KAMU",
     pakasir_api_key: "API_KEY_KAMU",
@@ -25,11 +24,15 @@ let settings = {
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+// ======= ROUTE ROOT =======
+app.get('/', (req,res)=>{
+    res.sendFile('index.html',{root:'public'});
+});
+
 // ======= USER QRIS =======
 app.post('/api/create-order', async (req,res)=>{
     const { username, paket, harga } = req.body;
     if(!username || !paket || !harga) return res.status(400).json({success:false,message:"Data tidak lengkap"});
-
     const order_id = Date.now();
     orders.push({id:order_id, paket, username, harga, createdAt:Date.now(), server_id:`srv${order_id}`, suspended:false});
 
@@ -105,3 +108,5 @@ cron.schedule('0 0 * * *', async ()=>{
 });
 
 app.listen(PORT, ()=>console.log(`Server running on port ${PORT}`));
+
+export default app; // untuk Vercel Node.js deployment
